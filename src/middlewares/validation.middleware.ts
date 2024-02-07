@@ -11,4 +11,6 @@ schema
     .has().not().spaces()                           // Should not have spaces
     .is().not().oneOf(['password', 'Password']);
 
-export { schema, emailValidator }
+const phoneNumberPattern = /^\d{11}$/
+
+export { schema, emailValidator, phoneNumberPattern }

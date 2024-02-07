@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { loginService, registerService } from "../services/auth.services"
+import { loginService, passwordResetService, registerService } from "../services/auth.services"
 
 //REGISTER A USER
 export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -36,7 +36,14 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 //PASSWORD RESET API
 export const passwordReset = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        
+        const userData = req.body
+        const resetData = await passwordResetService(userData)
+        res.status(200).json({
+            success: true,
+            status: "OK",
+            newpassword: resetData,
+            message: `Your Password has been reset, your new password is ${resetData}`
+        })
     } catch (error) {
         next(error)
     }
