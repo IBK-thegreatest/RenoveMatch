@@ -58,3 +58,21 @@ export const deleteUserService = async (userId: string): Promise<AllUserData> =>
     await userModel.findByIdAndDelete(userId)
     return user
 }
+
+//GET ALL HOMEOWNERS
+export const getHomeownersService = async (): Promise<AllUserData[]> => {
+    const homeowners: AllUserData[] = await userModel.find({ role: "homeowners"})
+    return homeowners
+}
+
+//GET ALL CONTRACTORS
+export const getContractorsService = async (): Promise<AllUserData[]> => {
+    const contractors: AllUserData[] = await userModel.find({ role: "contractors"})
+    return contractors
+}
+
+//GET ALL SUPPLIERS
+export const getSuppliersService = async (): Promise<AllUserData[]> => {
+    const suppliers: AllUserData[] = await userModel.find({ role: "suppliers"})
+    return suppliers
+}

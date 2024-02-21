@@ -20,7 +20,7 @@ export const createProject = async (req: RequestWithId, res: Response, next: Nex
 }
 
 //GET ALL PROJECTS
-export const getAllProjects = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getAllProjects = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const projects = await getAllProjectsService();
         res.status(200).json(projects)
@@ -54,7 +54,7 @@ export const getHomeownerProjects = async (req: RequestWithId, res: Response, ne
 }
 
 //UPDATE PROJECT INFORMATION
-export const updateProject = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const updateProject = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const userId = req.params.userId
         const projectId = req.params.projectId
@@ -73,7 +73,7 @@ export const updateProject = async (req: Request, res: Response, next: NextFunct
 }
 
 //DELETE PROJECT INFORMATION
-export const deleteProject = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const deleteProject = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const userId = req.params.userId
         const projectId = req.params.projectId

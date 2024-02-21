@@ -41,13 +41,14 @@ export const verifyUser = async (req: RequestWithId, res: Response, next: NextFu
 
 export const verifyAdmin = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     verifyToken(req, res, () => {
+        console.log(req.user)
         if(req.user.role === "admin") {
             next();
         } else {
             res.status(401).json({
                 success: false,
                 status: 401,
-                message: "You are not Authorized to do this!!!"
+                message: "You are not an Admin so you are not Authorized to do this!!!"
             })
         }
     })

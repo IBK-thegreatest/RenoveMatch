@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express"
-import { deleteUserService, getAllUsersService, getUserService, updateUserService } from "../services/user.services"
+import { deleteUserService, getAllUsersService, getContractorsService, getHomeownersService, getSuppliersService, getUserService, updateUserService } from "../services/user.services"
+import { RequestWithId } from "interfaces/auth.interface"
 
 //GET ALL USERS
 export const getAllusers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -12,7 +13,7 @@ export const getAllusers = async (req: Request, res: Response, next: NextFunctio
 }
 
 //GET A USER
-export const getUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getUser = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const userId = req.params.id
         const user = await getUserService(userId)
@@ -23,7 +24,7 @@ export const getUser = async (req: Request, res: Response, next: NextFunction): 
 }
 
 //UPDATE USER INFORMATION
-export const updateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const updateUser = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const userId = req.params.id
         const userData = req.body
@@ -40,7 +41,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 }
 
 //DELETE USER INFORMATION
-export const deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const deleteUser = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const userId = req.params.id
         await deleteUserService(userId)
@@ -53,6 +54,36 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
             }).catch(err => {
                 res.status(500).json(err)
             })
+    } catch (error) {
+        next(error)
+    }
+}
+
+//GET ALL HOMEOWNERS, CONTRACTORS OR SUPPLIERS
+export const getHomeowners = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const allRoles = await getHomeownersService()
+        res.status(200).json(allRoles)
+    } catch (error) {
+        next(error)
+    }
+}
+
+//GET ALL CONTRACTORS
+export const getContractors = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const allRoles = await getContractorsService()
+        res.status(200).json(allRoles)
+    } catch (error) {
+        next(error)
+    }
+}
+
+//GET ALL SUPPLIERS
+export const getSuppliers = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const allRoles = await getSuppliersService()
+        res.status(200).json(allRoles)
     } catch (error) {
         next(error)
     }

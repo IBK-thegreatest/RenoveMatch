@@ -28,6 +28,9 @@ const ProjectSchema = new mongoose.Schema(
             enum: ["open", "assigned", "completed"],
             default: "open"
         }
+    },
+    {
+        timestamps: true
     }
 );
 
