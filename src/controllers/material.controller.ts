@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { createMaterialService, deleteMaterialService, getAllMaterialsService, getContractorMaterialsService, getHomeownerMaterialsService, updateMaterialService } from "../services/material.services";
+import { createMaterialService, deleteMaterialService, getAllMaterialsService, updateMaterialService } from "../services/material.services";
 import { RequestWithId } from "../interfaces/auth.interface";
 
-//CREATE A Material
+//CREATE A MATERIAL
 export const createMaterial = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const homeownerId = req.user.id
@@ -19,7 +19,7 @@ export const createMaterial = async (req: RequestWithId, res: Response, next: Ne
     }
 }
 
-//GET ALL MaterialS
+//GET ALL MATERIALS
 export const getAllMaterials = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const materials = await getAllMaterialsService();
@@ -29,38 +29,13 @@ export const getAllMaterials = async (req: RequestWithId, res: Response, next: N
     }
 }
 
-//GET ALL MaterialS BY A SPECIFIC CONTRACTOR
-export const getContractorMaterials = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const userId = req.user.id
-        const contractorId = req.params.contractorId
-        const contractorMaterials = await getContractorMaterialsService(userId, contractorId)
-        res.status(200).json(contractorMaterials)
-    } catch (error) {
-        next(error)
-    }
-}
-
-//GET ALL MaterialS OWNED BY A SPECIFIC HOMEOWNER
-export const getHomeownerMaterials = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const userId = req.user.id
-        const homeownerId = req.params.homeownerId
-        const homeownerMaterials = await getHomeownerMaterialsService(userId, homeownerId)
-        res.status(200).json(homeownerMaterials)
-    } catch (error) {
-        next(error)
-    }
-}
-
-//UPDATE Material INFORMATION
+//UPDATE MATERIAL INFORMATION
 export const updateMaterial = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const userId = req.params.userId
         const materialId = req.params.materialId
-        const homeownerId = req.params.homeownerId
         const materialData = req.body
-        const updateMaterialData = await updateMaterialService(userId, homeownerId, materialId, materialData)
+        const updateMaterialData = await updateMaterialService(userId, materialId, materialData)
         res.status(200).json({
             success: true,
             status: "OK",
@@ -72,13 +47,13 @@ export const updateMaterial = async (req: RequestWithId, res: Response, next: Ne
     }
 }
 
-//DELETE Material INFORMATION
+//DELETE MATERIAL INFORMATION
 export const deleteMaterial = async (req: RequestWithId, res: Response, next: NextFunction): Promise<void> => {
     try {
         const userId = req.params.userId
-        const MaterialId = req.params.MaterialId
+        const materialId = req.params.MaterialId
         const homeownerId = req.params.homeownerId
-        await deleteMaterialService(userId, homeownerId, MaterialId)
+        await deleteMaterialService(userId, materialId)
             .then(() => {
                 res.status(200).json({
                     success: true,
